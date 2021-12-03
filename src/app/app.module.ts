@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { RecordsService } from './records.service';
 // import { OrdersComponent } from './orders/orders.component';
 // import { NavbarComponent } from './navbar/navbar.component';
 
@@ -20,7 +21,7 @@ import { AppComponent } from './app.component';
     // FeedbackModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [RecordsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

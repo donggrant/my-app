@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { UserDataComponent } from './user-data/user-data.component';
+import { RecordsService } from './records.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -6,22 +9,25 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  @ViewChild('usercontainer', { read: ViewContainerRef })
+  entry!: ViewContainerRef;
+
   title = 'Pet Pals';
   author = "Grant Dong and Hunter Vaccaro";
   name  = ""; 
 
-  showUsers(a: string) {   
-    var xmlhttp = new XMLHttpRequest();
-    this.name = a;
-    console.log(a);
-    xmlhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) { 
-        window.name = this.responseText; 
-        // change div for txtHint here somehow
-      }
-    };  
-    console.log(this.name);
-    xmlhttp.open("GET","https://cs4640.cs.virginia.edu/gdd7jh/sprint4/getUser.php?q="+a,true);
-    xmlhttp.send(); 
-  }
+  records = `Person information will be listed here...`;
+
+  constructor(private recordsService: RecordsService, private resolver: ComponentFactoryResolver) {}
+
+  createComponent(name : string) {
+    this.entry.clear();  
+    const componentRef = this.entry.createComponent(UserDataComponent); 
+    this.recordsService.getData(name).subscribe(results => { 
+      this.records = results 
+    })
+    componentRef.instance.showUsers(this.records);  
+  } 
+
+   
 }

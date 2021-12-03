@@ -29,13 +29,12 @@
               <a href="signOut.php"><h4>Sign Out</h4></a>
     </nav>
   </header> 
-    <form>
+    <form #usercontainer>
       <label>Begin typing a name:</label>
-      <input class="form-control" type="text" name="users" (change)="showUsers(name.value)" #name/>  
+      <input class="form-control" type="text" name="users" (change)="createComponent(name.value)" #name/>  
     </form>
+    <div [innerHTML]="records"></div> 
     <br>
-    <div id="txtHint"><b>Person information will be listed here...</b></div> 
-    <p> {{ name.value }} </p>
  <footer> 
   <small>Copyright &copy; 2021 Grant Dong and Hunter Vaccaro. All Rights Reserved</small>
 </footer>
