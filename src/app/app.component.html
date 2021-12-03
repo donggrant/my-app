@@ -18,7 +18,7 @@
     <script data-require="angular.js@1.3.x" src="https://code.angularjs.org/1.3.16/angular.js" data-semver="1.3.16"></script>
 
   </head>
-<body ng-controller="myCtrl">
+<body ng-app="myApp" ng-controller="myCtrl">
   <header>
     <nav>
               <img src="" alt="pet pals logo"/>
@@ -28,19 +28,35 @@
               <a href="profile.php"><h4>My Profile</h4></a>
               <a href="signOut.php"><h4>Sign Out</h4></a>
     </nav>
-  </header>
-<form>
-  <label>Begin typing a name:</label>
-  <input class="form-control" type="text" name="users" ng-change="showUser(myValue)" ng-model="myValue"/>
-</form>
-<br>
-<div id="txtHint"><b>Person information will be listed here...</b></div>
-<footer> 
+  </header> 
+    <form>
+      <label>Begin typing a name:</label>
+      <input class="form-control" type="text" name="users" (change)="showUsers(name.value)" #name/>  
+    </form>
+    <br>
+    <div id="txtHint"><b>Person information will be listed here...</b></div> 
+    <p> {{ name.value }} </p>
+ <footer> 
   <small>Copyright &copy; 2021 Grant Dong and Hunter Vaccaro. All Rights Reserved</small>
 </footer>
 </body>
 <script>
-  angular.module('myApp', []).controller('myCtrl', function($scope) {
+  angular.module('myApp', [])
+  .controller('myCtrl', ['$scope', function($scope) {   
+    $scope.showUser = function(myValue) {   
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) { 
+            $scope.namez = this.responseText;
+            document.getElementById("txtHint").innerHTML = this.responseText;
+          }
+        }; 
+        xmlhttp.open("GET","getUser.php?q="+myValue,true);
+        xmlhttp.send(); 
+    };
+  }]);
+  /*
+  angular.module('myApp', []).controller('myCtrl', function($scope) { 
       $scope.$watch('myValue', function(newValue, oldValue) {
         console.log("here");
         if (newValue != oldValue) {
@@ -58,5 +74,6 @@
         }
       });
   });
+  */
 </script>
 </html>
