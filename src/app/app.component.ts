@@ -17,10 +17,11 @@ export class AppComponent {
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) { 
         window.name = this.responseText; 
+        // change div for txtHint here somehow
       }
     };  
     console.log(this.name);
-    xmlhttp.open("GET","getUser.php?q="+a,true);
+    xmlhttp.open("GET","https://cs4640.cs.virginia.edu/gdd7jh/sprint4/getUser.php?q="+a,true);
     xmlhttp.send(); 
   }
 }
