@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+	<head>
+		<title>Pet Pals - Pet Search</title>
+        
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" 
+    crossorigin="anonymous">
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+		<meta name="author" content="Grant Dong and Hunter Vaccaro">
+		<meta name="description" content="pet matching application">
+		<meta name="keywords" content="pet pals animals matching adopting">  
+
+    <script data-require="angular.js@1.3.x" src="https://code.angularjs.org/1.3.16/angular.js" data-semver="1.3.16"></script>
+
+  </head>
+<body ng-controller="myCtrl">
+  <header>
+    <nav>
+              <img src="" alt="pet pals logo"/>
+              <a href="petSearch.php"><h4>Find a Pet</h4></a>
+              <a href="peopleSearch.html"><h4>People Search</h4></a>
+              <a href="chat.php"><h4>My Chats</h4></a>
+              <a href="profile.php"><h4>My Profile</h4></a>
+              <a href="signOut.php"><h4>Sign Out</h4></a>
+    </nav>
+  </header>
+<form>
+  <label>Begin typing a name:</label>
+  <input class="form-control" type="text" name="users" ng-change="showUser(myValue)" ng-model="myValue"/>
+</form>
+<br>
+<div id="txtHint"><b>Person information will be listed here...</b></div>
+<footer> 
+  <small>Copyright &copy; 2021 Grant Dong and Hunter Vaccaro. All Rights Reserved</small>
+</footer>
+</body>
+<script>
+  angular.module('myApp', []).controller('myCtrl', function($scope) {
+      $scope.$watch('myValue', function(newValue, oldValue) {
+        console.log("here");
+        if (newValue != oldValue) {
+          document.getElementById("txtHint").innerHTML = "";
+          return;
+        } else {
+          var xmlhttp = new XMLHttpRequest();
+          xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+          };
+          xmlhttp.open("GET","getUser.php?q="+newValue,true);
+          xmlhttp.send();
+        }
+      });
+  });
+</script>
+</html>
