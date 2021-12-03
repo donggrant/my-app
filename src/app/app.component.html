@@ -31,7 +31,7 @@
   </header> 
     <form #usercontainer>
       <label>Begin typing a name:</label>
-      <input class="form-control" type="text" name="users" (change)="createComponent(name.value)" #name/>  
+      <input [className]="'form-control'" type="text" name="users" (change)="createComponent(name.value)" #name/>  
     </form>
     <div [innerHTML]="records"></div> 
     <br>
