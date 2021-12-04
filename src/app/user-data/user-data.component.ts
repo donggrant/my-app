@@ -19,8 +19,8 @@ export class UserDataComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
-  showUsers(a: any) {    
-    this.user = a; 
+  showUsers(name: any) {    
+    this.user = name;   
   }  
 
 }

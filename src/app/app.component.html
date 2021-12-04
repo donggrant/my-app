@@ -33,7 +33,24 @@
       <label>Begin typing a name:</label>
       <input [className]="'form-control'" type="text" name="users" (change)="createComponent(name.value)" #name/>  
     </form>
-    <div [innerHTML]="records"></div> 
+  
+    <div *ngIf="records.length > 0 else loading">
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>User Type</th> 
+        </tr>
+        <tr *ngFor="let record of records;"> 
+            <td>{{record.name}}</td>
+            <td>{{record.email}}</td>
+            <td>{{record.type}}</td>
+        </tr>
+      </table>
+    </div>
+    <ng-template #loading>
+      <div>No user named <b [innerText]="name.value"></b>. Waiting for data to come... </div>
+    </ng-template>
     <br>
  <footer> 
   <small>Copyright &copy; 2021 Grant Dong and Hunter Vaccaro. All Rights Reserved</small>
